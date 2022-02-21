@@ -1,63 +1,93 @@
 import react, { useState } from "react";
-import { FlatList, Text, TextInput, View, ScrollView, Button } from 'react-native';
-const Images = ({navigation})=>{
+import { FlatList, Text, TextInput, View, ScrollView, Button, Platform, TouchableOpacity, TouchableHighlight } from 'react-native';
+const Images = ({ navigation }) => {
 
-    const [text,setText]=useState('')
-    const [input,setInput]=useState('')
-    const [count,setCount]=useState(1)
+    const [text, setText] = useState('')
+    const [input, setInput] = useState('')
+    const [count, setCount] = useState(1)
     const data = {
-        items:[
+        items: [
             {
-                name:'Krica',
-                klase:'11c'
+                name: 'Krica',
+                klase: '11c'
             },
 
             {
-                name:'Benas',
-                klase:'11b'
+                name: 'Benas',
+                klase: '11b'
             },
             {
-                name:'Jonas',
-                klase:'11c'
+                name: 'Jonas',
+                klase: '11c'
             },
 
             {
-                name:'Benas',
-                klase:'11b'
+                name: 'Benas',
+                klase: '11b'
             },
             {
-                name:'Jonas',
-                klase:'11c'
+                name: 'Jonas',
+                klase: '11c'
             },
 
             {
-                name:'Benas',
-                klase:'11b'
+                name: 'Benas',
+                klase: '11b'
             },
-           
-        ]}
-    
-    return(
-<View style={{backgroundColor:'white',flex:1,padding:20}}>
-    <Button title={'back'} onPress={()=>{
-        navigation.pop()
-    }}/>
-    <PropsFunkcija data={data} />
-</View>
+
+        ]
+    }
+
+    return (
+        <View style={{ backgroundColor: 'white', flex: 1, padding: 20 }}>
+            <Button title={'back'} onPress={() => {
+                navigation.pop()
+            }} />
+            <PropsFunkcija data={data} />
+        </View>
 
     )
 }
 export default Images
 
 
-const PropsFunkcija = (props)=>{
+const PropsFunkcija = (props) => {
 
-    return(
+    const Press = (item) => {
+        console.log(item)
+    }
+    const style = {
+        separator: {
+            backgroundColor: 'black'
+        }
+    }
+    return (
         <View>
-          <FlatList
-             data={props.data.items}
-          renderItem={({item,index}) => <Text key={index} style={{fontSize:25, color:'green'}}>{item.name} - {item.klase} </Text>}
-          />
+            <FlatList
+                ItemSeparatorComponent={
+                    Platform.OS !== 'android' &&
+                    (({ highlighted }) => (
+                        <View
+                            style={[
+                                style.separator,
+                                highlighted && { marginLeft: 0 }
+                            ]}
+                        />
+                    ))
+                }
+                data={props.data.items}
+                renderItem={({ item, index, separators }) => (
+                    <TouchableHighlight
+                        key={item.name + index}
+                        onPress={() => Press(item)}
+                        onShowUnderlay={separators.highlight}
+                        onHideUnderlay={separators.unhighlight}>
+                        <View style={{ backgroundColor: 'white' }}>
+                            <Text>{item.name}</Text>
+                        </View>
+                    </TouchableHighlight>
+                )}
+            />
         </View>
     )
 }
