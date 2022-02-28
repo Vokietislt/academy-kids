@@ -1,23 +1,16 @@
 import react, { useState } from "react";
 import { FlatList, Text, TextInput, View, ScrollView, TouchableOpacity } from 'react-native';
+import styles from '../css/mainCss'
+import { DisplayAnImage } from './Images'
 const Home = ({ navigation }) => {
 
     const [text, setText] = useState('')
     const [input, setInput] = useState('')
     const [count, setCount] = useState(1)
 
-    const styles = {
-        btn: {
-            margin: 10,
-            padding: 10,
-            backgroundColor: 'grey',
-
-        },
-        btnText: { justifyContent: 'center' }
-    }
     return (
-        <View style={{ backgroundColor: 'white', flex: 1, padding: 20 }}>
-
+        <View style={{ backgroundColor: 'white', flex: 1 }}>
+            <DisplayAnImage containerStyle={styles.makeBackground} imgStyle={styles.fullscreen} uri={'https://cdn1.vectorstock.com/i/1000x1000/19/25/heat-background-cover-vector-171925.jpg'} />
             <TouchableOpacity style={styles.btn} onPress={() => {
                 navigation.navigate('flat')
             }} ><Text style={styles.btnText}>FlatList</Text></TouchableOpacity>
@@ -25,6 +18,10 @@ const Home = ({ navigation }) => {
             <TouchableOpacity style={styles.btn} onPress={() => {
                 navigation.navigate('image')
             }} ><Text style={styles.btnText}>Images</Text></TouchableOpacity>
+
+            <TouchableOpacity style={styles.btn} onPress={() => {
+                navigation.navigate('states')
+            }} ><Text style={styles.btnText}>States</Text></TouchableOpacity>
 
         </View >
     )
