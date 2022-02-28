@@ -1,19 +1,32 @@
 import react, { useState } from "react";
-import { FlatList, Text, TextInput, View, ScrollView, Button } from 'react-native';
+import { FlatList, Text, TextInput, View, ScrollView, TouchableOpacity } from 'react-native';
 const Home = ({ navigation }) => {
 
     const [text, setText] = useState('')
     const [input, setInput] = useState('')
     const [count, setCount] = useState(1)
 
+    const styles = {
+        btn: {
+            margin: 10,
+            padding: 10,
+            backgroundColor: 'grey',
+
+        },
+        btnText: { justifyContent: 'center' }
+    }
     return (
         <View style={{ backgroundColor: 'white', flex: 1, padding: 20 }}>
 
-            <Button title={'next-Screen'} onPress={() => {
-                navigation.navigate('images')
-            }} />
-            <PropsFunkcija data={data} />
-        </View>
+            <TouchableOpacity style={styles.btn} onPress={() => {
+                navigation.navigate('flat')
+            }} ><Text style={styles.btnText}>FlatList</Text></TouchableOpacity>
+
+            <TouchableOpacity style={styles.btn} onPress={() => {
+                navigation.navigate('image')
+            }} ><Text style={styles.btnText}>Images</Text></TouchableOpacity>
+
+        </View >
     )
 }
 export default Home
