@@ -26,10 +26,6 @@ const Images = ()=>{
 }
 export default Images
 
-
-// const styles = StyleSheet.create({
-
-//   });
   
  export const DisplayAnImage = (props) => {
 
