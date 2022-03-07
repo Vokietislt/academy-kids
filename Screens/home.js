@@ -19,9 +19,11 @@ const Home = ({ navigation }) => {
                 navigation.navigate('image')
             }} ><Text style={styles.btnText}>Images</Text></TouchableOpacity>
 
+
+
             <TouchableOpacity style={styles.btn} onPress={() => {
-                navigation.navigate('states')
-            }} ><Text style={styles.btnText}>States</Text></TouchableOpacity>
+                navigation.navigate('count')
+            }} ><Text style={styles.btnText}>Count</Text></TouchableOpacity>
 
         </View >
     )
