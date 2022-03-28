@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { Animated, Text, View, StyleSheet, Button, SafeAreaView } from 'react-native';
+import React, { useRef ,useEffect} from 'react';
+import { Animated, Text, View, StyleSheet, Button, SafeAreaView ,Easing } from 'react-native';
 
 const Animacijos = () => {
   // fadeAnim will be used as the value for opacity. Initial Value: 0
@@ -7,8 +7,11 @@ const Animacijos = () => {
   const y = useRef(new Animated.Value(0)).current;
   const x = useRef(new Animated.Value(0)).current;
 
+  const color1 = useRef(new Animated.Value(0)).current
+  const p1 = useRef(new Animated.Value(0)).current
+
+
   const fadeIn = () => {
-    // Will change fadeAnim value to 1 in 5 seconds
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 500,
@@ -18,29 +21,43 @@ const Animacijos = () => {
   };
 
   const fadeOut = () => {
-    // Will change fadeAnim value to 0 in 3 seconds
     Animated.timing(fadeAnim, {
       toValue: 0,
       duration: 300,
       useNativeDriver:true,
     }).start();
   };
-  const stepDown = (current) => {
-      console.log(current)
+  const right = (current) => {
     Animated.timing(y, {
       toValue: current-100,
-      duration: 300,
+      duration: 1500,
       useNativeDriver:true,
+      easeing:Easing.elastic(2)
     }).start();
   };
-  const stepUp = (current) => {
-      console.log(current)
+  const left = (current) => {
     Animated.timing(y, {
       toValue: current+100,
-      duration: 300,
+      duration: 1500,
       useNativeDriver:true,
+      easing:Easing.sin
     }).start();
   };
+  const top = (current)=>{
+    Animated.timing(x,{
+        toValue:current-100,
+        duration: 300,
+        useNativeDriver:true,
+    }).start()
+  }
+  const bottom=(current)=>{
+    Animated.timing(x,{
+        toValue:current+100,
+        duration: 300,
+        useNativeDriver:true,
+    }).start()
+  }
+
   const spring =()=>{
     Animated.parallel([
     Animated.spring((x), {
@@ -53,7 +70,6 @@ const Animacijos = () => {
     ])
   }
   const sequence = (currenty,currentx)=>{
-
       Animated.sequence([
         Animated.timing(x, {
             toValue: currentx+100,
@@ -64,16 +80,60 @@ const Animacijos = () => {
             duration: 500
         }),
         Animated.timing(x, {
-            toValue: currentx-100,
+            toValue: currentx,
             duration: 500
         }),
         Animated.timing(y, {
-            toValue: currenty-100,
+            toValue: currenty,
             duration: 500
         }),
     ]).start()
   }
 
+  const sequence2 = ()=>{
+    Animated.sequence([
+        Animated.timing(color1, {
+            toValue: 1,
+            duration: 500
+        }),
+        Animated.timing(color1, {
+            toValue: 0,
+            duration: 500
+        }),
+    ]).start()
+  }
+  const toStart = ()=>{
+    Animated.sequence([
+        Animated.timing(x, {
+            toValue: 0,
+            duration: 500
+        }),
+        Animated.timing(y, {
+            toValue: 0,
+            duration: 500
+        }),
+    ]).start()
+  }
+const colorLoop = ()=>{
+
+    Animated.loop(Animated.timing(color1 , {
+      toValue: 3,
+      duration: 300,
+      useNativeDriver:false,
+  })).start();
+}
+const staggering = ()=>{
+    Animated.stagger(100, [
+        Animated.timing(color1, {
+            toValue: 4,
+            duration: 500
+        }),
+        Animated.timing(p1, {
+            toValue: 1,
+            duration: 200
+        })
+    ]).start()
+}
   return (
     <SafeAreaView style={styles.container}>
       <Animated.View
@@ -81,23 +141,34 @@ const Animacijos = () => {
           styles.fadingContainer,
           {
             opacity: fadeAnim,
-          },
-          {
-              top:x
-          },
-          {left:y}
+            top:x,
+            left:y,
+            backgroundColor:color1.interpolate({
+                inputRange: [0, 1,2,3],
+                outputRange: ["#fff", "#f00","#0f0","#00f"]
+            }),
+            padding:p1.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, 10]
+            })
+          }
         ]}>
-        <Text style={styles.fadingText}>Fading View!</Text>
+        <Text style={styles.fadingText}>Animacijos Jėga!</Text>
       </Animated.View>
       <View style={styles.buttonRow}>
         <Button title="Fade In View" onPress={fadeIn} />
         <Button title="Fade Out View" onPress={fadeOut} />
         <Button title="Sequence" onPress={()=>{sequence(y._value,x._value)}} />
-        <Button title="Spring" onPress={()=>{spring()}} />
+        <Button title="Sequence color" onPress={()=>{sequence2()}} />
+        <Button title="Color Loop" onPress={()=>{colorLoop()}} />
+        <Button title="Stagger" onPress={()=>{staggering()}} />
       </View>
       <View style={styles.buttonRow2}>
-        <Button title="Step Right" onPress={()=>{stepUp(y._value)}} />
-        <Button title="Step Left" onPress={()=>{stepDown(y._value)}} />
+        <Button title="Right" onPress={()=>{right(y._value)}} />
+        <Button title="Left" onPress={()=>{left(y._value)}} />
+        <Button title="Top" onPress={()=>{top(x._value)}} />
+        <Button title="Bottom" onPress={()=>{bottom(x._value)}} />
+        <Button title="To start" onPress={()=>{(toStart())}} />
       </View>
     </SafeAreaView>
   );
@@ -113,7 +184,6 @@ const styles = StyleSheet.create({
   },
   fadingContainer: {
     padding: 20,
-    backgroundColor: 'powderblue',
   },
   fadingText: {
     fontSize: 28,
