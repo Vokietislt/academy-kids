@@ -18,12 +18,13 @@ const Home = ({ navigation }) => {
             <TouchableOpacity style={styles.btn} onPress={() => {
                 navigation.navigate('image')
             }} ><Text style={styles.btnText}>Images</Text></TouchableOpacity>
-
-
-
             <TouchableOpacity style={styles.btn} onPress={() => {
                 navigation.navigate('count')
             }} ><Text style={styles.btnText}>Count</Text></TouchableOpacity>
+
+            <TouchableOpacity style={styles.btn} onPress={() => {
+                navigation.navigate('animation')
+            }} ><Text style={styles.btnText}>Animation</Text></TouchableOpacity>
 
         </View >
     )
