@@ -2,6 +2,11 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import LoginStack from './navigation/LoginNavigator';
 export default function App() {
+
+  
+  const app = initializeApp(firebaseConfig);
+
+
   return (
    <LoginStack/>
   );

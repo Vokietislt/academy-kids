@@ -25,6 +25,9 @@ const Home = ({ navigation }) => {
             <TouchableOpacity style={styles.btn} onPress={() => {
                 navigation.navigate('animation')
             }} ><Text style={styles.btnText}>Animation</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.btn} onPress={() => {
+                navigation.navigate('login')
+            }} ><Text style={styles.btnText}>Login</Text></TouchableOpacity>
 
         </View >
     )
